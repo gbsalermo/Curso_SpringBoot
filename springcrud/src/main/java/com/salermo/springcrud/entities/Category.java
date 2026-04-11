@@ -2,12 +2,22 @@ package com.salermo.springcrud.entities;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_category")
 public class Category implements Serializable {
 
     //atributos
 
     private static final long serialVersionUID = 1L; //isso serve para converter o objeto de java em bytes, para poder passar em rede por exemplo
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)            //informando que eu quero que esse id seja autoincrementado
     private Long id;
     private String name;
 
