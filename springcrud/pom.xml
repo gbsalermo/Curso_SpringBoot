@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.5</version>
+		<version>3.4.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salermo</groupId>
@@ -34,7 +34,7 @@
 		<!-- WEB / API REST (controllers, rotas, servidor Tomcat) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<!-- JPA / BANCO DE DADOS (Hibernate, entidades, CRUD) -->
@@ -63,11 +63,12 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		
-		<!-- SEGURANÇA (login, autenticação, proteção de rotas) -->
+		<!-- SEGURANÇA (login, autenticação, proteção de rotas) 
+		 retirada para testar, pois o h2 nao estava abrindo
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<!-- TESTES (JUnit, Mockito, testes de contexto Spring) -->
 		<dependency>
