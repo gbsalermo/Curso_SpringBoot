@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.salermo.springcrud.dto.CategoryDTO;
 import com.salermo.springcrud.entities.Category;
 //import org.springframework.web.bind.annotation.RequestParam;
 import com.salermo.springcrud.services.CategoryService;
@@ -30,8 +31,8 @@ public class CategoryResource {
 
     //endpoints
     @GetMapping
-    public ResponseEntity<List<Category>> findAll(){
-        List<Category> list = service.findAll(); //Chamo a list do service como é o seguimento da camada
+    public ResponseEntity<List<CategoryDTO>> findAll(){
+        List<CategoryDTO> list = service.findAll(); //Chamo a list do service como é o seguimento da camada
     /*    List<Category> list = new ArrayList<>();
         list.add(new Category(1L, "Books")); //Aqui adiciono a primeira categoria, o L maiusculo indica que o numero vai ser um long que é o id da categoria
         list.add(new Category(2L, "Eletronics")); */
