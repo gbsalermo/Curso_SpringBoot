@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,14 @@ public class CategoryResource {
         list.add(new Category(1L, "Books")); //Aqui adiciono a primeira categoria, o L maiusculo indica que o numero vai ser um long que é o id da categoria
         list.add(new Category(2L, "Eletronics")); */
         return ResponseEntity.ok().body(list) ;
+    }
+
+    //Bucar uma categoria por id
+    //Adicionei a anotação @PathVariable que serve para precompilar a rota e casar com o parametro recebido(no caso id)
+       @GetMapping(value = "/{id}")
+    public ResponseEntity<CategoryDTO> findById(@PathVariable Long id){
+        CategoryDTO dto = service.findById(id); //Chamo a list do service como é o seguimento da camada
+        return ResponseEntity.ok().body(dto);
     }
 
     /*TESTE

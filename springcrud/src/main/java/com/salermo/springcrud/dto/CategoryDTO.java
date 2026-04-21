@@ -2,7 +2,7 @@ package com.salermo.springcrud.dto;
 
 import java.io.Serializable;
 
-import org.w3c.dom.Entity;
+
 
 import com.salermo.springcrud.entities.Category;
 

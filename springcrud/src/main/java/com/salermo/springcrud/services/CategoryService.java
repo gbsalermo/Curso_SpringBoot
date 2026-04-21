@@ -1,8 +1,9 @@
 package com.salermo.springcrud.services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,6 @@ public class CategoryService {
         List<Category> list = repository.findAll();
                                                    //Aqui faço a conversao do list em uma categoryDTO     
         return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
-
-
-
 /*         //Convertendo a lista de categoria para categoriaDTO
         List<CategoryDTO> listDto = new ArrayList<>(); //instancio uma lista vazia
 
@@ -34,5 +32,13 @@ public class CategoryService {
             listDto.add(new CategoryDTO(cat)); //Instancio um dto com essa categoria e adiciono a listDTO
         }
         return listDto; */
+    }
+
+
+    @Transactional(readOnly = true)
+    public CategoryDTO findById(Long id) {
+        Optional<Category> obj = repository.findById(id); //O Optional é uma abordagem para evitar trabalhar com valor nulo
+        Category entity = obj.get();
+        return new CategoryDTO(entity);
     }
 }
