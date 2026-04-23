@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.salermo.springcrud.dto.CategoryDTO;
 import com.salermo.springcrud.entities.Category;
 import com.salermo.springcrud.repositories.CategoryRepository;
+import com.salermo.springcrud.services.exceptions.EntityNotFoundException;
+
+
 
 @Service //Responsavel por registrar essa classe como um componente que vai participar do sistema de injeção de dependencia automatizado do spring
 public class CategoryService {
@@ -38,7 +41,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Optional<Category> obj = repository.findById(id); //O Optional é uma abordagem para evitar trabalhar com valor nulo
-        Category entity = obj.get();
+        Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found")); //O orElseThrow permite que eu retorne outra coisa caso não haja nada no objeto, nesse caso uso uma expressão lambda para retornar minha classe de exceção
         return new CategoryDTO(entity);
     }
 }

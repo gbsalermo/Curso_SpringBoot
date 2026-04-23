@@ -45,7 +45,7 @@ public class CategoryResource {
        @GetMapping(value = "/{id}")
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id){
         CategoryDTO dto = service.findById(id); //Chamo a list do service como é o seguimento da camada
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok(dto);
     }
 
     /*TESTE
