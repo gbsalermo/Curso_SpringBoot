@@ -44,4 +44,13 @@ public class CategoryService {
         Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found")); //O orElseThrow permite que eu retorne outra coisa caso não haja nada no objeto, nesse caso uso uma expressão lambda para retornar minha classe de exceção
         return new CategoryDTO(entity);
     }
+
+    @Transactional
+    public CategoryDTO insert(CategoryDTO dto) {
+        Category entity = new Category();
+        entity.setName(dto.getName());
+        entity = repository.save(entity);
+        return new CategoryDTO(entity);
+
+    }
 }
