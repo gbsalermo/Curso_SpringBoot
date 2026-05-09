@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.salermo.springcrud.services.exceptions.EntityNotFoundException;
+import com.salermo.springcrud.services.exceptions.ResourceNotFoundException;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice //Permite que essa classe intercepte qualquer excessão que ocorrer
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request){
         StandardError err = new StandardError(); 
         err.setTimeStamp(Instant.now()); //Pegando a hora do erro
         err.setStatus(HttpStatus.NOT_FOUND.value()); //pegando os status

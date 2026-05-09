@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,7 +50,7 @@ public class CategoryResource {
        @GetMapping(value = "/{id}")
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id){
         CategoryDTO dto = service.findById(id); //Chamo a list do service como é o seguimento da camada
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     /*TESTE
@@ -64,6 +65,12 @@ public class CategoryResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);  //Uso o created uri para retornar o 201 created
+    }
+
+     @PutMapping(value = "/{id") //No padrão Rest quando vamos atualizar novos recursos usamos o put    
+    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto){
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
 

@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.salermo.springcrud.dto.CategoryDTO;
 import com.salermo.springcrud.entities.Category;
 import com.salermo.springcrud.repositories.CategoryRepository;
-import com.salermo.springcrud.services.exceptions.EntityNotFoundException;
+import com.salermo.springcrud.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 
 
@@ -41,7 +43,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Optional<Category> obj = repository.findById(id); //O Optional é uma abordagem para evitar trabalhar com valor nulo
-        Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found")); //O orElseThrow permite que eu retorne outra coisa caso não haja nada no objeto, nesse caso uso uma expressão lambda para retornar minha classe de exceção
+        Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found")); //O orElseThrow permite que eu retorne outra coisa caso não haja nada no objeto, nesse caso uso uma expressão lambda para retornar minha classe de exceção
         return new CategoryDTO(entity);
     }
 
@@ -52,5 +54,19 @@ public class CategoryService {
         entity = repository.save(entity);
         return new CategoryDTO(entity);
 
+    }
+
+
+    @Transactional
+    public CategoryDTO update(Long id, CategoryDTO dto) {
+        try{
+        Category entity = repository.getReferenceById(id); //Uso o getReferenceById que não toca no banco de dados, ele instancia temporariamente um obj com os dados e id, ai quando manda salvar que ele acessa o banco de dados(Sendo essencial para não ir ao banco de dados duas vezes, por isso é utilizado no update)
+        entity.setName(dto.getName());
+        entity = repository.save(entity); //Agora salvo
+        return new CategoryDTO(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Id not found" + id);
+        }
     }
 }
