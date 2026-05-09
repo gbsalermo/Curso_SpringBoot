@@ -6,12 +6,15 @@ import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.salermo.springcrud.dto.CategoryDTO;
 import com.salermo.springcrud.entities.Category;
 import com.salermo.springcrud.repositories.CategoryRepository;
+import com.salermo.springcrud.services.exceptions.DataBaseException;
 import com.salermo.springcrud.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -67,6 +70,19 @@ public class CategoryService {
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id not found" + id);
+        }
+    }
+
+
+    public void delete(Long id) {
+        try{
+        repository.deleteById(id);
+        }
+        catch(EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException("Id not found" + id);
+        }
+        catch(DataIntegrityViolationException e){ //Para garantir que o usuario não exclua uma categoria que afete a integridade do sistema
+            throw new DataBaseException("Integrity violation");
         }
     }
 }
