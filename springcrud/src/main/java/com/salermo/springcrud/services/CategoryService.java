@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,18 +29,10 @@ public class CategoryService {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> findAll(){
-        List<Category> list = repository.findAll();
-                                                   //Aqui faço a conversao do list em uma categoryDTO     
-        return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
-/*         //Convertendo a lista de categoria para categoriaDTO
-        List<CategoryDTO> listDto = new ArrayList<>(); //instancio uma lista vazia
+    public Page<CategoryDTO> findAllPaged(PageRequest pageRequest){
+        Page<Category> list = repository.findAll(pageRequest);                                                  
+        return list.map(x -> new CategoryDTO(x));
 
-        //Crio um for para percorrer a lista, dou o apelido para cada elemento de cat
-        for(Category cat : list){
-            listDto.add(new CategoryDTO(cat)); //Instancio um dto com essa categoria e adiciono a listDTO
-        }
-        return listDto; */
     }
 
 

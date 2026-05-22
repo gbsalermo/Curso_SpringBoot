@@ -1,7 +1,9 @@
 package com.salermo.springcrud.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,9 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
+    @Column(name = "created_at")  
+    private Instant createdAt;    
+    
     //Construtor
     public Category(){
     }
@@ -46,7 +51,13 @@ public class Category implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    public Instant getCreatedAt() {  
+        return createdAt;
+    }
     
+    public void setCreatedAt(Instant createdAt) {  
+        this.createdAt = createdAt;
+    }
 
     //Aqui ele vai comparar apenas o id
         @Override

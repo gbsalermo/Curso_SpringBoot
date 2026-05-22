@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StandardError implements Serializable {
-    private static final Long serialVersionUID = 1L;
 
 
     private Instant timeStamp;
